@@ -4,13 +4,36 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <!-- Information for Google Oauth 2.0 -->
+   <meta name="google-signin-client_id" content="823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com">
    <link rel="stylesheet" href="css/style.css">
    <title>Document</title>
   </head>
   <body>
     <header id="showcase">
       <h1>Code Nation</h1>
-      <p>Upload From Google Classroom</p>
+      <div id="my-signin2"></div>
+      <script>
+        function onSuccess(googleUser) {
+          console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        }
+        function onFailure(error) {
+          console.log(error);
+        }
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure
+          });
+        }
+      </script>
+
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
       <a href="#" class="button">Login</a>
     </header>
   </body>
