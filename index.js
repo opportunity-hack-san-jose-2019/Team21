@@ -17,7 +17,8 @@ socketIO.on('connection', function(socket){
   console.log('a user connected');
 });
 */
-var io = socketIO.listen(server, {log: false});
+
+/* var io = socketIO.listen(server, {log: false});
 
 io.sockets.on("connection", function(socket){
     socket.on("sendVar", function(value){
@@ -25,11 +26,11 @@ io.sockets.on("connection", function(socket){
         console.log("A user has connected");
 
     });
-});
+}); */
 
 server.listen(5000);
 
-const request = require('request');
+/*const request = require('request');*/
 
 /*request('', { json: true }, (err, res, body) => {
   if (err) { return console.log(err); }
