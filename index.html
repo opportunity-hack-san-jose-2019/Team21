@@ -6,13 +6,20 @@
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <!-- Information for Google Oauth 2.0 -->
    <meta name="google-signin-client_id" content="823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com">
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="./css/style.css">
    <title>Document</title>
   </head>
   <body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
     <header id="showcase">
+
       <h1>ClassUp</h1>
+
       <a href="https://classroom.google.com/querysubmissioncsv?r=%5B%5B100%5D%2C%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Ctrue%2Ctrue%2Ctrue%5D%2C%5Bnull%2C%5B%5D%2C%5B%5D%2C%5B%5D%2C%5B%5B%2233533282801%22%5D%5D%5D%2C%5B0%2C1%5D%5D&authuser=0" download> Download Link </a>
+      <!-- Google Authentication -->
       <div id="my-signin2"></div>
       <script>
         function onSuccess(googleUser) {
@@ -33,15 +40,11 @@
           });
         }
       </script>
-      <script type="text/javascript">
-      $(document).ready(function () {
-
-        $("a").click();
-
-      });
-      </script>
 
       <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+      
+      
     </header>
   </body>
   </html>
