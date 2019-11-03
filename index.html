@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
   <!-- Information for Google Oauth 2.0 -->
   <meta name="google-signin-client_id" content="823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com">
   <link rel="stylesheet" href="css/style.css">
   <title>Document</title>
  </head>
-
  <body>
    <header id="showcase">
      <h1>ClassUp</h1>
-
      <div id="my-signin2"></div>
-
+     <p>Functionality made simple. The goal is to offer a fast, convenient solution to transfering data out of Google
+       Classroom. Teachers can safely login to the website for an automatic download of a .csv file of their class.
+     </p>
+</script>
      <script>
        function onSuccess(googleUser) {
          console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
@@ -40,8 +39,6 @@
      </script>
 
      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-
    </header>
-
  </body>
  </html>
