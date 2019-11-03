@@ -13,6 +13,7 @@
  </head>
 
  <body>
+    <script src="https://apis.google.com/js/client:plusone.js" type="application/javascript"></script>
    <header id="showcase">
      <h1>ClassUp</h1>
 
@@ -21,7 +22,7 @@
      <script>
        function onSuccess(googleUser) {
          console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-         /*window.open('https://classroom.google.com/querysubmissioncsv?r=%5B%5B100%5D%2C%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Ctrue%2Ctrue%2Ctrue%5D%2C%5Bnull%2C%5B%5D%2C%5B%5D%2C%5B%5D%2C%5B%5B%2233533282801%22%5D%5D%5D%2C%5B0%2C1%5D%5D&authuser=-1', '_blank');*/
+         authenticate().then(loadClient).then(execute());
        }
        function onFailure(error) {
          console.log(error);
@@ -52,12 +53,13 @@
 
       function authenticate() {
         return gapi.auth2.getAuthInstance()
-            .signIn({scope: "https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.courses.readonly"})
+            .signIn({scope: "https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.courses.readonly https://www.googleapis.com/auth/classroom.coursework.me https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.coursework.me https://www.googleapis.com/auth/classroom.coursework.me.readonly https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.coursework.students.readonly https://www.googleapis.com/auth/classroom.student-submissions.me.readonly https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"})
             .then(function() { console.log("Sign-in successful"); },
                   function(err) { console.error("Error signing in", err); });
       }
       function loadClient() {
-        gapi.client.setApiKey("AIzaSyDQJ1WiIlMiN3UdmWhFHjVAfThYy_EjoOI");
+        //console.log(gapi);
+        gapi.client.setApiKey("AIzaSyDVX52aWQU6o9Qipyt5vIytK4UrZhilVsc");
         return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/classroom/v1/rest")
             .then(function() { console.log("GAPI client loaded for API"); },
                   function(err) { console.error("Error loading GAPI client for API", err); });
@@ -69,38 +71,63 @@
             "ACTIVE"
           ]
         })
+            //Obtain the courseId of each course
             .then(function(response) {
-                    var a = [];
+                    var arr = [];
                     results = response.result.courses;
-                    console.log(response);
-                    // Handle the results here (response.result has the parsed body).
-                    console.log("Response", response.result.courses);
                     for(var i = 0; i < results.length; i++)
                     {
-                      console.log([results[i].id,results[i].name]);
-                      a.push([results[i].id,results[i].name]);
+                      //console.log([results[i].id,results[i].name]);
+                      arr.push(results[i].id);
                     }
-                    console.log(a);
-                    return a;
-                    //return response.result.id;
-                  },
-                  function(err) { console.error("Execute error", err); });
-      }
+                    return arr;
+                  })
+                  //obtain the coursework of each course
+                  .then(function(response) {
+                    console.log(response);
+
+                    console.log(gapi.client.classroom.courses.courseWork.list({"courseId": "46904651667"}));
+
+                    for(i = 0; i < response.length; i++) {
+                      var courseId = response[i];
+                      executeCourseWork(courseId);
+                      //console.log(courseId);
+
+                  }
+      });
+      
       gapi.load("client:auth2", function() {
         gapi.auth2.init({client_id: "823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com"});
       });
-    </script>
+    }
 
-    <script type="text/javascript">
-      function execute2() {
-        var a = [];
-        response.forEach(a.push(response.id));
-      }
-    </script>
-    <button onclick="authenticate().then(loadClient)">authorize and load</button>
-    <button onclick="execute()">execute</button>
-    <button onclick="execute2()"> Execute2</button>
+    function executeCourseWork(courseIde) {
+    return gapi.client.classroom.courses.courseWork.list({
+      "courseId": courseIde
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                //console.log("Response", response);
+                if(response.result.courseWork != undefined){
+                  results = response.result.courseWork;
+                  console.log(results);
+                }
+                else
+                {
+                  console.log("no coursework to be found");
+                }
+                
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com"});
+  });
 
+
+
+
+    </script>
 
    </header>
 
