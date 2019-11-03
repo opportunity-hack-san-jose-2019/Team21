@@ -21,7 +21,7 @@
      <script>
        function onSuccess(googleUser) {
          console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-         window.open('https://classroom.google.com/querysubmissioncsv?r=%5B%5B100%5D%2C%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Ctrue%2Ctrue%2Ctrue%5D%2C%5Bnull%2C%5B%5D%2C%5B%5D%2C%5B%5D%2C%5B%5B%2233533282801%22%5D%5D%5D%2C%5B0%2C1%5D%5D&authuser=-1', '_blank');
+         /*window.open('https://classroom.google.com/querysubmissioncsv?r=%5B%5B100%5D%2C%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Ctrue%2Ctrue%2Ctrue%5D%2C%5Bnull%2C%5B%5D%2C%5B%5D%2C%5B%5D%2C%5B%5B%2233533282801%22%5D%5D%5D%2C%5B0%2C1%5D%5D&authuser=-1', '_blank');*/
        }
        function onFailure(error) {
          console.log(error);
@@ -40,6 +40,57 @@
      </script>
 
      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+
+     <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      /**
+       * Sample JavaScript code for classroom.courses.list
+       * See instructions for running APIs Explorer code samples locally:
+       * https://developers.google.com/explorer-help/guides/code_samples#javascript
+       */
+
+      function authenticate() {
+        return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.courses.readonly"})
+            .then(function() { console.log("Sign-in successful"); },
+                  function(err) { console.error("Error signing in", err); });
+      }
+      function loadClient() {
+        gapi.client.setApiKey("AIzaSyDQJ1WiIlMiN3UdmWhFHjVAfThYy_EjoOI");
+        return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/classroom/v1/rest")
+            .then(function() { console.log("GAPI client loaded for API"); },
+                  function(err) { console.error("Error loading GAPI client for API", err); });
+      }
+      // Make sure the client is loaded and sign-in is complete before calling this method.
+      function execute() {
+        return gapi.client.classroom.courses.list({
+          "courseStates": [
+            "ACTIVE"
+          ]
+        })
+            .then(function(response) {
+                    // Handle the results here (response.result has the parsed body).
+                    console.log("Response", response);
+                  },
+                  function(err) { console.error("Execute error", err); });
+      }
+      gapi.load("client:auth2", function() {
+        gapi.auth2.init({client_id: "823153065330-4hs1mkpdtjpkopr98cjj3dmlr6n68vov.apps.googleusercontent.com"});
+      });
+    </script>
+
+    <script type="text/javascript">
+      function execute2() {
+        var a = [];
+        response.forEach(a.push(response.id));
+        //console.log(JSON.parse(execute().id));
+      }
+    </script>
+    <button onclick="authenticate().then(loadClient)">authorize and load</button>
+    <button onclick="execute()">execute</button>
+    <button onclick="execute2()"> Execute2</button>
+
 
    </header>
 
