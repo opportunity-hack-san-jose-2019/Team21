@@ -1,11 +1,10 @@
-
 var express = require('express');
 var app = express();
-var socketIO = require("socket.io")(http);
-var http = require("http");
+//setting middleware
 
 app.use(express.static('public')); 
 app.use('/', express.static('./'));
+
 
 var server = http.createServer(app);
 
@@ -37,4 +36,7 @@ server.listen(5000);
   console.log(body.url);
   console.log(body.explanation);
 });*/
+
+
+var server = app.listen(5000);
 
