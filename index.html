@@ -70,8 +70,19 @@
           ]
         })
             .then(function(response) {
+                    var a = [];
+                    results = response.result.courses;
+                    console.log(response);
                     // Handle the results here (response.result has the parsed body).
-                    console.log("Response", response);
+                    console.log("Response", response.result.courses);
+                    for(var i = 0; i < results.length; i++)
+                    {
+                      console.log([results[i].id,results[i].name]);
+                      a.push([results[i].id,results[i].name]);
+                    }
+                    console.log(a);
+                    return a;
+                    //return response.result.id;
                   },
                   function(err) { console.error("Execute error", err); });
       }
@@ -84,7 +95,6 @@
       function execute2() {
         var a = [];
         response.forEach(a.push(response.id));
-        //console.log(JSON.parse(execute().id));
       }
     </script>
     <button onclick="authenticate().then(loadClient)">authorize and load</button>
